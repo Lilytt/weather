@@ -1,17 +1,43 @@
-import React from 'react';
+import React, { Component } from "react";
 import ReactDOM from 'react-dom';
+import {Router, Route, browserHistory} from 'react-router';
+import asyncComponent from "./components/AsyncComponent";
+
 import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+const WeatherList = asyncComponent(() => import('./weather_list/weather_list'));
+
+const setTitle = title => () => document.title = title;
+
+function fontSizeInit() {
+    var doc = document.documentElement,
+        cli = doc.clientWidth,
+        clh = doc.clientHeight;
+        if(cli < clh){
+            if (cli < 750) {
+                cli = cli / 7.5;
+            } else {
+                cli = 100;
+            }
+            // cli = cli / 9;
+        }else{
+            if (clh < 750) {
+                cli = clh / 7.5;
+            } else {
+                cli = 100;
+            }
+        }
+
+    doc.style.fontSize = cli + "px";
+}
+fontSizeInit();
+
+
+var routername = "/h5/mogul_react";
+
+ReactDOM.render((
+    <Router history={browserHistory}>
+        <Route path={routername + "/weather_list"} exact component={WeatherList} onEnter={setTitle('天气列表')} />
+    </Router>
+),document.getElementById("root"))
