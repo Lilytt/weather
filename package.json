@@ -111,6 +111,6 @@
   "devDependencies": {
     "@babel/core": "^7.4.5",
     "babel-plugin-transform-exponentiation-operator": "^6.24.1",
-    "webpack-dev-server": "^2.7.1"
+    "webpack-dev-server": "^3.1.11"
   }
 }
